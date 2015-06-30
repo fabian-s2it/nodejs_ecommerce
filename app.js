@@ -8,11 +8,16 @@ var application_root = __dirname;
 
 var server = require('http').Server(app);
 var path = require('path');
+var morgan      = require('morgan');
 var bodyParser = require('body-parser');
 
 var port = process.env.PORT || 8001;
 
+var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
+var config = require(__dirname + '/config'); // get our config file
+
 app.use(express.static(path.join(__dirname, '/')));
+app.use(morgan('dev'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -26,8 +31,8 @@ mongoose.connect('mongodb://localhost'); // connect to our database
 // GET OUR ROUTERS ----------------------------------
 var bear_router 	= require('./routes/bear_routes'),
 	client_router 	= require('./routes/client_routes'),
-	project_router	= require('./router/project_routes'); 
-
+	project_router	= require('./routes/project_routes'),
+	user_router		= require('./routes/user_routes'); 
 
 
 // REGISTER OUR ROUTES -------------------------------
@@ -35,6 +40,7 @@ var bear_router 	= require('./routes/bear_routes'),
 app.use('/api', bear_router);
 app.use('/api', client_router);
 app.use('/api', project_router);
+app.use('/api', user_router);
 
 
 app.listen(port, function(){
