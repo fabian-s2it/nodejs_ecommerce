@@ -58,7 +58,6 @@ router.route('/authenticate')
                     res.json({success: false, message: 'Auth failed. Wrong password'});
                 }
                 else {
-                    console.log(config.secret);
                     var token = jwt.sign(user, config.secret, {expiresInMinutes: 1440});
 
                     res.json({
