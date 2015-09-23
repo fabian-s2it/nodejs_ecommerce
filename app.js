@@ -39,7 +39,7 @@ var bear_router 	= require('./routes/bear_routes'),
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
 
-app.use('/api', auth_router);
+//app.use('/api', auth_router);
 app.use('/api', user_router);
 app.use('/api', bear_router);
 app.use('/api', client_router);
