@@ -1,7 +1,7 @@
 var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 
-var WidgetServiceNow   = new Schema({
+var WidgetServiceNowSchema   = new Schema({
   chart_type : {
     type: String,
     required: true
@@ -17,6 +17,10 @@ var WidgetServiceNow   = new Schema({
   teams : [{
     type : String,
     required : false
+  }],
+  status: [{
+  	type: String,
+  	required: false
   }],
   params : [{
     type: Schema.Types.ObjectId,
