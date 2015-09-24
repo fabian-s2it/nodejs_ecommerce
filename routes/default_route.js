@@ -1,6 +1,7 @@
 var express = require('express'),
 	router  = express.Router();
 
+var path    = require("path");
 
 // /bears
 router.route('/teste')
@@ -12,7 +13,7 @@ router.route('/teste')
 
 	//get all bears
 	.get(function(req, res) {
-        res.json({body: req.body});
+        res.sendFile('index.html', {root: './templates/'});
 	});
 
     

@@ -11,26 +11,34 @@ router.route('/widget_service_now')
 	//create a WidgetServiceNow
 	.post(function(req, res) {
 
-		var widget_service_now = new WidgetServiceNow();
+        var param = new Param({
+            name: req.body.param.name,
+            value: req.body.param.value
+        });
 
-		widget_service_now.chart_type = req.body.chart_type;
-        widget_service_now.filter_by = req.body.filter_by;
-        widget_service_now.filters = req.body.filters;
-        widget_service_now.teams = req.body.teams;
+        param.save(function(err) {
+            if (err)
+                res.send(err)
 
-        var param = new Param();
+            var widget_service_now = new WidgetServiceNow();
 
-        param.name = req.body.param.name;
-        param.value = req.body.param.value;
+            widget_service_now.chart_type = req.body.chart_type;
+            widget_service_now.filter_by = req.body.filter_by;
+            widget_service_now.filters = req.body.filters;
+            widget_service_now.teams = req.body.teams;
 
-        widget_service_now.params = param._id;
+            widget_service_now.params = param._id;
 
-		widget_service_now.save(function(err) {
-			if (err)
-				res.send(err);
+            widget_service_now.save(function(err) {
+                if (err)
+                    res.send(err);
 
-			res.json({ message: 'WidgetServiceNow created!' });
-		});
+                res.json({ message: 'WidgetServiceNow ' + widget_service_now._id + ' created!' });
+            });
+
+        })
+
+		
 
 	})
 
@@ -51,7 +59,10 @@ router.route('/widget_service_now/:widget_id')
 
     // get the WidgetServiceNow with that id (accessed at GET http://localhost:8080/api/WidgetServiceNows/:WidgetServiceNow_id)
     .get(function(req, res) {
-        WidgetServiceNow.findById(req.params.widget_id, function(err, WidgetServiceNow) {
+        WidgetServiceNow
+        .findOne({_id: req.params.widget_id})
+        .populate('params')
+        .exec(function(err, WidgetServiceNow) {
             if (err)
                 res.send(err);
             res.json(WidgetServiceNow);

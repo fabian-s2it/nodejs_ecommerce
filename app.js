@@ -16,7 +16,8 @@ var port = process.env.PORT || 9999;
 var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var config = require(__dirname + '/config'); // get our config file
 
-app.use(express.static(path.join(__dirname, '/')));
+app.use(express.static(path.join(__dirname, 'templates')));
+
 app.use(morgan('dev'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
